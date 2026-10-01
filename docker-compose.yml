@@ -9,6 +9,7 @@ services:
     restart: unless-stopped
 
   rag-app:
+    platform: linux/amd64
     build: .
     container_name: rag-app
     # network_mode: "service:ollama" 설정을 통해 app.py의 localhost:11434 코드를 무수정으로 직접 통신

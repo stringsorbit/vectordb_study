@@ -1,0 +1,22 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  rag-app:
+    build: .
+    container_name: rag-app
+    # network_mode: "service:ollama" 설정을 통해 app.py의 localhost:11434 코드를 무수정으로 직접 통신
+    network_mode: "service:ollama"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
